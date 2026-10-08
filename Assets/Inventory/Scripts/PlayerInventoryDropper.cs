@@ -70,7 +70,7 @@ public class PlayerInventoryDropper : MonoBehaviour
             prefabBounds.Add(boundsKey, bounds);
         }
 
-        if (!TryFindDropPose(bounds, prefab.transform.rotation,
+        if (!TryFindDropPose(bounds, prefab.transform.rotation, item.dropHorizontally,
                 out Vector3 position, out Quaternion rotation))
         {
             if (spawned != null)
@@ -98,7 +98,7 @@ public class PlayerInventoryDropper : MonoBehaviour
         return true;
     }
 
-    private bool TryFindDropPose(Bounds bounds, Quaternion authoredRotation,
+    private bool TryFindDropPose(Bounds bounds, Quaternion authoredRotation, bool dropHorizontally,
         out Vector3 position, out Quaternion rotation)
     {
         position = default;
@@ -150,15 +150,25 @@ public class PlayerInventoryDropper : MonoBehaviour
                 (directionIndex % 2 == 0 ? -1f : 1f);
             Vector3 direction = Quaternion.AngleAxis(angle, Vector3.up) * forward;
 
-            for (int rotationIndex = 0; rotationIndex < RotationCount; rotationIndex++)
+            int rotationCount = dropHorizontally ? 2 : RotationCount;
+            for (int rotationIndex = 0; rotationIndex < rotationCount; rotationIndex++)
             {
                 Quaternion pose;
-                switch (rotationIndex)
+                if (dropHorizontally)
                 {
-                    case 0: pose = authoredRotation; break;
-                    case 1: pose = Quaternion.LookRotation(direction) * layFlat; break;
-                    case 2: pose = Quaternion.LookRotation(Vector3.Cross(Vector3.up, direction)) * layFlat; break;
-                    default: pose = Quaternion.FromToRotation(longAxis, Vector3.up); break;
+                    Vector3 flatDirection = rotationIndex == 0
+                        ? direction : Vector3.Cross(Vector3.up, direction);
+                    pose = Quaternion.LookRotation(flatDirection) * layFlat;
+                }
+                else
+                {
+                    switch (rotationIndex)
+                    {
+                        case 0: pose = authoredRotation; break;
+                        case 1: pose = Quaternion.LookRotation(direction) * layFlat; break;
+                        case 2: pose = Quaternion.LookRotation(Vector3.Cross(Vector3.up, direction)) * layFlat; break;
+                        default: pose = Quaternion.FromToRotation(longAxis, Vector3.up); break;
+                    }
                 }
 
                 // Move the bounds center far enough to clear both shapes.

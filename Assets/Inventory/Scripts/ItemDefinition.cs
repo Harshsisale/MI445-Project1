@@ -21,6 +21,9 @@ public class ItemDefinition : ScriptableObject
     [Tooltip("Multiplies the prefab's scale when dropped. Use positive X/Y/Z values. (1, 1, 1) keeps the prefab's size.")]
     public Vector3 worldModelScale = Vector3.one;
 
+    [Tooltip("Keep the model's longest axis horizontal when dropped. Only horizontal poses are tried.")]
+    public bool dropHorizontally;
+
     private void OnValidate()
     {
         worldModelScale = new Vector3(
