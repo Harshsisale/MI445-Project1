@@ -14,10 +14,10 @@ public class PlayerInventoryDropper : MonoBehaviour
     private const int DistanceSteps = 3;
     private const int QueryCapacity = 64;
 
-    // Bounds include the prefab's scale, measured with its root at identity.
+    // Bounds include the prefab and item's scale, measured at root identity.
     // Rotating this box gives a conservative oriented volume without recooking
     // meshes or moving a physics object for every candidate.
-    private readonly Dictionary<GameObject, Bounds> prefabBounds = new();
+    private readonly Dictionary<(GameObject prefab, Vector3 scale), Bounds> prefabBounds = new();
     private readonly List<Collider> colliders = new();
     private readonly List<Renderer> renderers = new();
     private readonly Collider[] overlapResults = new Collider[QueryCapacity];
@@ -40,13 +40,21 @@ public class PlayerInventoryDropper : MonoBehaviour
         if (prefab == null)
             return false;
 
+        Vector3 modelScale = item.worldModelScale;
+        if (!IsValidScale(modelScale.x) || !IsValidScale(modelScale.y) ||
+            !IsValidScale(modelScale.z))
+            return false;
+
+        Vector3 instanceScale = Vector3.Scale(prefab.transform.localScale, modelScale);
+        var boundsKey = (prefab, modelScale);
         GameObject spawned = null;
         Physics.SyncTransforms();
-        if (!prefabBounds.TryGetValue(prefab, out Bounds bounds))
+        if (!prefabBounds.TryGetValue(boundsKey, out Bounds bounds))
         {
             // This first instance is measured and disabled within the same
             // call, before any rendering or physics step can occur.
             spawned = Instantiate(prefab, dropOrigin.position, Quaternion.identity);
+            spawned.transform.localScale = instanceScale;
             spawned.SetActive(true);
             Physics.SyncTransforms();
             bool hasBounds = TryGetBounds(spawned, out bounds);
@@ -59,7 +67,7 @@ public class PlayerInventoryDropper : MonoBehaviour
                 return false;
             }
 
-            prefabBounds.Add(prefab, bounds);
+            prefabBounds.Add(boundsKey, bounds);
         }
 
         if (!TryFindDropPose(bounds, prefab.transform.rotation,
@@ -75,6 +83,7 @@ public class PlayerInventoryDropper : MonoBehaviour
         else
             spawned.transform.SetPositionAndRotation(position, rotation);
 
+        spawned.transform.localScale = instanceScale;
         WorldItemPickup pickup = PreparePickup(spawned, bounds);
         pickup.Initialize(item, 1);
 
@@ -236,6 +245,11 @@ public class PlayerInventoryDropper : MonoBehaviour
     private static Vector3 Abs(Vector3 vector)
     {
         return new Vector3(Mathf.Abs(vector.x), Mathf.Abs(vector.y), Mathf.Abs(vector.z));
+    }
+
+    private static bool IsValidScale(float scale)
+    {
+        return scale > 0f && !float.IsNaN(scale) && !float.IsInfinity(scale);
     }
 
     private static float ProjectedRadius(Vector3 extents, Quaternion rotation, Vector3 axis)
