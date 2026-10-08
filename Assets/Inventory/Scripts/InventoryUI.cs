@@ -20,6 +20,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button examineButton;
     [SerializeField] private Button dropButton;
     [SerializeField] private TMP_Text descriptionText;
+    [SerializeField] private PlayerInventoryDropper dropper;
 
     private readonly List<Button> slotButtons = new();
     private InputAction toggleAction;
@@ -169,10 +170,21 @@ public class InventoryUI : MonoBehaviour
 
     private void DropSelected()
     {
-        if (selectedIndex < 0)
+        if (selectedIndex < 0 ||
+            selectedIndex >= inventory.Slots.Count)
             return;
 
-        descriptionText.text =
-            "Dropping will be implemented next.";
+        bool success = dropper.TryDrop(selectedIndex);
+
+        if (success)
+        {
+            selectedIndex = -1;
+            contextMenu.SetActive(false);
+            descriptionText.text = "Item dropped.";
+        }
+        else
+        {
+            descriptionText.text = "Cannot drop item here.";
+        }
     }
 }
