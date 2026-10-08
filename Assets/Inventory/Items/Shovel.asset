@@ -17,6 +17,6 @@ MonoBehaviour:
   description: A sturdy shovel
   maxStackSize: 1
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  worldModelScale: {x: 6, y: 6, z: 6}
+  worldPrefab: {fileID: 2899834485284239624, guid: d48b7befb9c226a4781092562f5c447c, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
   dropHorizontally: 1
-  worldPrefab: {fileID: 919132149155446097, guid: 06bf67f3c1ce3c64fa9611f545fb792a, type: 3}
