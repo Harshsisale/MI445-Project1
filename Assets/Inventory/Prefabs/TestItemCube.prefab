@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3026934712154818737}
   - component: {fileID: 4314915590445902107}
   - component: {fileID: 1792286386595525971}
+  - component: {fileID: 7952984121122162338}
   m_Layer: 0
   m_Name: TestItemCube
   m_TagString: Untagged
@@ -127,3 +128,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldItemPickup
   item: {fileID: 11400000, guid: c70fea9bf4885904fa6bdcdb5220aae4, type: 2}
   quantity: 1
+--- !u!54 &7952984121122162338
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6737541241167981609}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

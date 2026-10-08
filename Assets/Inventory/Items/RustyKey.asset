@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Rusty Key
   description: An old antique key
   maxStackSize: 1
-  icon: {fileID: 0}
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 0}
