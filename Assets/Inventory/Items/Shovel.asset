@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470724e69d088cb40bc567391a1933d3, type: 3}
   m_Name: Shovel
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  itemId: 
-  displayName: 
-  description: 
+  itemId: shovel
+  displayName: Shovel
+  description: A sturdy shovel
   maxStackSize: 1
   icon: {fileID: 0}
   worldPrefab: {fileID: 0}
