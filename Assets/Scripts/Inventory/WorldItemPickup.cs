@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class WorldItemPickup : MonoBehaviour
+public class WorldItemPickup : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemDefinition item;
     [SerializeField, Min(1)] private int quantity = 1;
@@ -18,7 +18,10 @@ public class WorldItemPickup : MonoBehaviour
         quantity = Mathf.Max(1, newQuantity);
         claimed = false;
     }
-
+    public void Interact(PlayerInventory inventory)
+    {
+        TryPickup(inventory);
+    }
     public bool TryPickup(PlayerInventory inventory)
     {
         if (claimed || inventory == null || item == null)
