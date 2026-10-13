@@ -16,6 +16,11 @@ MonoBehaviour:
   displayName: Padlock Key
   description: A large key which came with a padlock. Doesn't fit most locks.
   maxStackSize: 1
+  canDrop: 1
+  canEquip: 1
+  canRead: 0
+  canUse: 1
+  heldPrefab: {fileID: 0}
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 0}
   worldModelScale: {x: 1, y: 1, z: 1}

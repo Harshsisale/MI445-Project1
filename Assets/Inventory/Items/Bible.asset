@@ -16,6 +16,11 @@ MonoBehaviour:
   displayName: Bible
   description: Your grandmother's old Bible. God rest her soul.
   maxStackSize: 1
+  canDrop: 1
+  canEquip: 0
+  canRead: 1
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 0}
   worldModelScale: {x: 1, y: 1, z: 1}
