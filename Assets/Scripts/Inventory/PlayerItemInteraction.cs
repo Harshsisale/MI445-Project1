@@ -37,10 +37,13 @@ public class PlayerItemInteraction : MonoBehaviour
             return;
         }
 
-        WorldItemPickup pickup =
-            hit.collider.GetComponentInParent<WorldItemPickup>();
+        IInteractable interactable =
+            hit.collider.GetComponentInParent<IInteractable>();
 
-        if (pickup != null)
-            pickup.TryPickup(inventory);
+        if (interactable != null)
+        {
+            interactable.Interact(inventory);
+        }
     }
 }
+

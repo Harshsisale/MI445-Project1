@@ -10,11 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 470724e69d088cb40bc567391a1933d3, type: 3}
-  m_Name: RustyKey
+  m_Name: ShelterCode
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  itemId: rusty_key
-  displayName: Rusty Key
-  description: An old antique key
+  itemId: shelter_code
+  displayName: Shelter Code
+  description: 'Salvation.
+
+'
   maxStackSize: 1
+  canDrop: 0
+  canEquip: 0
+  canRead: 1
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 0}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0
