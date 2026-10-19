@@ -12212,15 +12212,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3771
+      value: 4.534785
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3771
+      value: 4.534785
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3771
+      value: 4.534785
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12228,7 +12228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1585
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12266,6 +12266,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 500460b244ffa6042a65de0a64c44f6e, type: 2}
+    - target: {fileID: -5568371526223589888, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5170667590967815405, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 56069a27fd0bbb044b6a875600f407b4, type: 2}
     - target: {fileID: -2577548232221058511, guid: a9066cd5532a8e249821d56aeae0c311, type: 3}
       propertyPath: m_LocalScale.x
       value: 109.83516
@@ -12981,7 +12989,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 100
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
