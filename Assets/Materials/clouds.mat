@@ -107,7 +107,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Dissolve: 0.98
+    - _Dissolve: 0.8
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -116,7 +116,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _NoisePower: 1.69
-    - _NoiseScale: 10.16
+    - _NoiseScale: 11.43
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -131,14 +131,14 @@ Material:
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
-    - _twirlamount: 9.87
+    - _twirlamount: 14.94
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.735849, g: 0.71965104, b: 0.71965104, a: 1}
+    - _Color: {r: 0.12578613, g: 0.12578613, b: 0.12578613, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NoiseSpeed: {r: 0, g: 0.5, b: 0, a: 0}
+    - _NoiseSpeed: {r: 0, g: 0.26, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _twirlcenter: {r: 0, g: 0.5, b: 0, a: 0}
+    - _twirlcenter: {r: 0, g: -1.32, b: 0, a: 0}
     - _twirlspeed: {r: 0, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
