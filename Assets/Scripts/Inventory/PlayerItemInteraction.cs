@@ -8,12 +8,14 @@ public class PlayerItemInteraction : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private PlayerInventory inventory;
+    [SerializeField] private PlayerItemHolder itemHolder;
     [FormerlySerializedAs("pickupRange")]
     [SerializeField, Min(0.1f)] private float interactionRange = 3f;
     [FormerlySerializedAs("pickupMask")]
     [SerializeField] private LayerMask interactionMask = ~0;
 
     public PlayerInventory Inventory => inventory;
+    public ItemDefinition HeldItem => itemHolder != null ? itemHolder.EquippedItem : null;
     public IInteractable CurrentInteractable { get; private set; }
 
     private InputAction interactAction;
