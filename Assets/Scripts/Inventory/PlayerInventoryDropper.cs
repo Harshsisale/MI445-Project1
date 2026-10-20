@@ -31,7 +31,7 @@ public class PlayerInventoryDropper : MonoBehaviour
 
         InventorySlot slot = inventory.Slots[slotIndex];
         ItemDefinition item = slot.item;
-        if (item == null || slot.quantity <= 0)
+        if (item == null || !item.canDrop || slot.quantity <= 0)
             return false;
 
         GameObject prefab = item.worldPrefab != null

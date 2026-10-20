@@ -12,15 +12,17 @@ public class WorldItemPickup : MonoBehaviour, IInteractable
     public string ItemName =>
         item != null ? item.displayName : "Unknown Item";
 
+    public string Prompt => "Pick up " + ItemName;
+
     public void Initialize(ItemDefinition newItem, int newQuantity)
     {
         item = newItem;
         quantity = Mathf.Max(1, newQuantity);
         claimed = false;
     }
-    public void Interact(PlayerInventory inventory)
+    public void Interact(PlayerItemInteraction player)
     {
-        TryPickup(inventory);
+        TryPickup(player.Inventory);
     }
     public bool TryPickup(PlayerInventory inventory)
     {

@@ -21,6 +21,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button dropButton;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private PlayerInventoryDropper dropper;
+    [SerializeField] private PlayerItemHolder itemHolder;
 
     private readonly List<Button> slotButtons = new();
     private InputAction toggleAction;
@@ -138,6 +139,9 @@ public class InventoryUI : MonoBehaviour
             selectedIndex = -1;
             contextMenu.SetActive(false);
         }
+
+        if (selectedIndex >= 0)
+            RefreshSelectedActions();
     }
 
     private void SelectSlot(int index)
@@ -148,15 +152,40 @@ public class InventoryUI : MonoBehaviour
         selectedIndex = index;
         contextMenu.SetActive(true);
         descriptionText.text = "";
+        RefreshSelectedActions();
+    }
+
+    private void RefreshSelectedActions()
+    {
+        ItemDefinition item = inventory.Slots[selectedIndex].item;
+        bool equipped = itemHolder != null && itemHolder.EquippedItem == item;
+
+        useButton.GetComponentInChildren<TMP_Text>().text =
+            item.canEquip ? equipped ? "Unequip" : "Equip" : "Use";
+        useButton.interactable = itemHolder != null && item.canEquip && item.heldPrefab != null;
+        dropButton.interactable = item.canDrop;
     }
 
     private void UseSelected()
     {
-        if (selectedIndex < 0)
+        if (selectedIndex < 0 || selectedIndex >= inventory.Slots.Count || itemHolder == null)
             return;
 
-        descriptionText.text =
-            "Nothing nearby to use this item on.";
+        ItemDefinition item = inventory.Slots[selectedIndex].item;
+
+        if (itemHolder.EquippedItem == item)
+        {
+            itemHolder.Unequip();
+            descriptionText.text = "Item unequipped.";
+        }
+        else
+        {
+            descriptionText.text = itemHolder.TryEquip(item)
+                ? "Item equipped."
+                : "Cannot equip this item.";
+        }
+
+        RefreshSelectedActions();
     }
 
     private void ExamineSelected()

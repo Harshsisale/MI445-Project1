@@ -1,4 +1,5 @@
 public interface IInteractable
 {
-    void Interact(PlayerInventory inventory);
+    string Prompt { get; }
+    void Interact(PlayerItemInteraction player);
 }
