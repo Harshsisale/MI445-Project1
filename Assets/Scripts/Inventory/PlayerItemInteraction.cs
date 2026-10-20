@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -9,6 +10,7 @@ public class PlayerItemInteraction : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private PlayerInventory inventory;
     [SerializeField] private PlayerItemHolder itemHolder;
+    [SerializeField] private TMP_Text promptText;
     [FormerlySerializedAs("pickupRange")]
     [SerializeField, Min(0.1f)] private float interactionRange = 3f;
     [FormerlySerializedAs("pickupMask")]
@@ -36,6 +38,27 @@ public class PlayerItemInteraction : MonoBehaviour
 
         if (interactAction.WasPressedThisFrame())
             CurrentInteractable?.Interact(this);
+    }
+
+    private void LateUpdate()
+    {
+        if (promptText == null)
+            return;
+
+        bool showPrompt = Cursor.lockState == CursorLockMode.Locked &&
+            CurrentInteractable is MonoBehaviour target && target != null && target.isActiveAndEnabled;
+
+        promptText.text = showPrompt
+            ? "E / Left click - " + CurrentInteractable.Prompt
+            : "";
+    }
+
+    private void OnDisable()
+    {
+        CurrentInteractable = null;
+
+        if (promptText != null)
+            promptText.text = "";
     }
 
     private IInteractable FindInteractable()
