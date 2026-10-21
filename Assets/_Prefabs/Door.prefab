@@ -70,6 +70,8 @@ MonoBehaviour:
   hinge: {fileID: 5583385172618436064}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
 --- !u!1 &4191233004841103130
 GameObject:
   m_ObjectHideFlags: 0
