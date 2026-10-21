@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SaltGrinder
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: salt_grinder
-  displayName: Salt Grinder
-  description: A small handheld grinder used to grind salt chunks into smaller, more
-    edible pieces.
+  displayName: Drying Dust
+  description: A small handheld grinder used to grind white crystalline chunks of
+    dust into smaller, more edible pieces.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 3944696517414679776, guid: 0bad2cf2e3990324887e0123dbfe7f17, type: 3}

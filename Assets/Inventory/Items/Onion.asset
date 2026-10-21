@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Onion
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: onion
-  displayName: Onion
-  description: A root with an ability to inflict a gasous chemical that is known
+  displayName: Fruit of Tears
+  description: A fruit with an ability to inflict a gasous chemical that is known
     to make a person's eyes to water rather than their mouths.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 4580651131871373717, guid: 6db534daeaa1cea4690c6055cbfaf526, type: 3}

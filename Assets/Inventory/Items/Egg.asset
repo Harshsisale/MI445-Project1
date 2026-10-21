@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Egg
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: egg
-  displayName: Egg
+  displayName: Unripe Children
   description: A filled container of poultry offspring with contents inside known
     to make ingredients bind together to make a solid product when cooked. Contents
     can be cooked to provide a high sustainable nutrient source. Shells are not recommended
     to ingest.
   maxStackSize: 12
   icon: {fileID: 0}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 3565128889780449494, guid: 1eb6f4021251b564eb25918dd09d837e, type: 3}

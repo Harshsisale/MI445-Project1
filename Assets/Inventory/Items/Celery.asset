@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Celery
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: celery
-  displayName: Celery
-  description: Known as a negative calorie food thanks to its difficulty to be digested
-    in the digestive system.
+  displayName: Stalks Unbroken
+  description: Known as a negative calorie food thanks to its difficulty to be broken
+    down in the digestive system.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 3638975453124839342, guid: 8c2d9393185fce5439324dd37f382178, type: 3}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: carrot
-  displayName: Carrot
-  description: 'A root based plant used as a cover up to radar techology during World
-    War 1. Excellent ingredient to put in stews. '
+  displayName: Ochre Roots
+  description: 'A root based plant used as a cover up to the idea radar techology
+    a war. Excellent ingredient to put in stews. '
   maxStackSize: 4
   icon: {fileID: 0}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 2234953386648955915, guid: 6dc387baaa58ee449825f1e51db4171c, type: 3}
