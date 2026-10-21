@@ -215791,6 +215791,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &195035048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2202308611447566736, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+  m_PrefabInstance: {fileID: 1765651098}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &195067154
 Mesh:
   m_ObjectHideFlags: 0
@@ -315565,6 +315570,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5583385172618436064, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559337424808722943, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -720125,6 +720134,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5583385172618436064, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
   m_PrefabInstance: {fileID: 1765651098}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &672889136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6559337424808722943, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+  m_PrefabInstance: {fileID: 1765651098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195035048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01265dfd62904dbf9a2bd47d4af7afe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorInteractable
+--- !u!114 &672889137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195035048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ffaec295a4fe7bfa13a2627b2ced4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
+  isOn: 0
+  onChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 672889136}
+        m_TargetAssemblyTypeName: DoorInteractable, Assembly-CSharp
+        m_MethodName: SetOpen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 938563767}
+        m_TargetAssemblyTypeName: DoorInteractable, Assembly-CSharp
+        m_MethodName: SetOpen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!43 &673324536
 Mesh:
   m_ObjectHideFlags: 0
@@ -795426,7 +795486,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2202308611447566736, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 938563768}
   m_SourcePrefab: {fileID: 100100000, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
 --- !u!4 &739501070 stripped
 Transform:
@@ -884056,6 +884119,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5583385172618436064, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559337424808722943, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1003919,6 +1003986,62 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &938563766 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2202308611447566736, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+  m_PrefabInstance: {fileID: 739501069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &938563767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6559337424808722943, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+  m_PrefabInstance: {fileID: 739501069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938563766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01265dfd62904dbf9a2bd47d4af7afe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorInteractable
+--- !u!114 &938563768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938563766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ffaec295a4fe7bfa13a2627b2ced4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
+  isOn: 0
+  onChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 938563767}
+        m_TargetAssemblyTypeName: DoorInteractable, Assembly-CSharp
+        m_MethodName: SetOpen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 672889136}
+        m_TargetAssemblyTypeName: DoorInteractable, Assembly-CSharp
+        m_MethodName: SetOpen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &939102656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951933,7 +1952056,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2202308611447566736, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 672889137}
   m_SourcePrefab: {fileID: 100100000, guid: 50ccbc60770f85e47a68f844fed34231, type: 3}
 --- !u!43 &1765654783
 Mesh:
