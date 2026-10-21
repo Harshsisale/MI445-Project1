@@ -16,6 +16,11 @@ MonoBehaviour:
   displayName: Shovel
   description: A sturdy shovel
   maxStackSize: 1
+  canDrop: 1
+  canEquip: 1
+  canRead: 0
+  canUse: 1
+  heldPrefab: {fileID: 1800000000, guid: e4bc876066cb45b3b884174678a82408, type: 3}
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 2899834485284239624, guid: d48b7befb9c226a4781092562f5c447c, type: 3}
   worldModelScale: {x: 1, y: 1, z: 1}

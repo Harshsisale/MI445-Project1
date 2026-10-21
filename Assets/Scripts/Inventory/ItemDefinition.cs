@@ -13,6 +13,15 @@ public class ItemDefinition : ScriptableObject
 
     [Min(1)] public int maxStackSize = 1;
 
+    [Header("Item Behaviors")]
+    public bool canDrop = true;
+    public bool canEquip;
+    public bool canRead;
+    public bool canUse;
+
+    [Header("Held Model")]
+    public GameObject heldPrefab;
+
     public Sprite icon;
 
     [Header("World Model")]
