@@ -27,6 +27,7 @@ public class Puzzle3 : MonoBehaviour
 
     private InputAction interactAction;
 
+    [SerializeField] GameObject Reward;
     private void Awake()
     {
         interactAction = playerInput.actions.FindAction("Interact");
@@ -55,7 +56,11 @@ public class Puzzle3 : MonoBehaviour
                     
 
                     PlacedObjects.Add(itDef);
-                    if (PlacedObjects.Count == PlacedObjectsPosition.Count) PuzzleSolved = true;
+                    if (PlacedObjects.Count == PlacedObjectsPosition.Count) 
+                    { 
+                        PuzzleSolved = true; 
+                        Reward.SetActive(true);
+                    }
                     return;
                 }
             }
