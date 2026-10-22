@@ -131,6 +131,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3222925130300877724}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1542860140956471022}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 928323238742223324}
   m_SourcePrefab: {fileID: 100100000, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
 --- !u!1 &336338110221438010 stripped
 GameObject:
@@ -152,9 +158,53 @@ MonoBehaviour:
   target: {fileID: 0}
   useMainCameraIfEmpty: 0
   targetOffset: {x: 0, y: 0, z: 0}
-  mode: 0
+  mode: 1
   rotationOffset: {x: 0, y: 0, z: 0}
   turnSpeed: 0
+--- !u!114 &1542860140956471022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336338110221438010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1443a504e4f5c424cb5c9eeef211b9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tornado
+  player: {fileID: 0}
+  moveSpeed: 2
+  stopDistance: 0
+  stayOnGround: 1
+  spinSpeed: 0
+--- !u!54 &928323238742223324
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336338110221438010}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!4 &1144258547695785600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
@@ -242,6 +292,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6188742458428380822}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7150113313040150981}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1298763884321257119}
   m_SourcePrefab: {fileID: 100100000, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
 --- !u!1 &4768351597450370881 stripped
 GameObject:
@@ -263,9 +319,53 @@ MonoBehaviour:
   target: {fileID: 0}
   useMainCameraIfEmpty: 0
   targetOffset: {x: 0, y: 0, z: 0}
-  mode: 0
+  mode: 1
   rotationOffset: {x: 0, y: 0, z: 0}
   turnSpeed: 0
+--- !u!114 &7150113313040150981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768351597450370881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1443a504e4f5c424cb5c9eeef211b9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tornado
+  player: {fileID: 0}
+  moveSpeed: 2
+  stopDistance: 0
+  stayOnGround: 1
+  spinSpeed: 0
+--- !u!54 &1298763884321257119
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768351597450370881}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!4 &5289273455055881723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 053cabe6ff884dd489f0186f6bc42457, type: 3}
