@@ -18,4 +18,4 @@ MonoBehaviour:
     a war. Excellent ingredient to put in stews. '
   maxStackSize: 4
   icon: {fileID: 0}
-  worldPrefab: {fileID: 2234953386648955915, guid: 6dc387baaa58ee449825f1e51db4171c, type: 3}
+  worldPrefab: {fileID: 8925190850510709740, guid: f1bb00abaaeebb74b86775790def4863, type: 3}

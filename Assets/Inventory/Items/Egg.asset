@@ -20,4 +20,4 @@ MonoBehaviour:
     to ingest.
   maxStackSize: 12
   icon: {fileID: 0}
-  worldPrefab: {fileID: 3565128889780449494, guid: 1eb6f4021251b564eb25918dd09d837e, type: 3}
+  worldPrefab: {fileID: 2499239106334361689, guid: faff02ed1ba860946980a74ec49ef9b6, type: 3}

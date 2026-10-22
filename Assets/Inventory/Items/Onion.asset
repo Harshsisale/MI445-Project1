@@ -18,4 +18,4 @@ MonoBehaviour:
     to make a person's eyes to water rather than their mouths.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 4580651131871373717, guid: 6db534daeaa1cea4690c6055cbfaf526, type: 3}
+  worldPrefab: {fileID: 3666153168666497409, guid: d990782d9b5fa0c43851b112c80a3bc1, type: 3}

@@ -18,4 +18,4 @@ MonoBehaviour:
     down in the digestive system.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 3638975453124839342, guid: 8c2d9393185fce5439324dd37f382178, type: 3}
+  worldPrefab: {fileID: 721847850119862473, guid: 3ba78a012219d7545bcb31436931dd71, type: 3}

@@ -18,4 +18,4 @@ MonoBehaviour:
     dust into smaller, more edible pieces.
   maxStackSize: 5
   icon: {fileID: 0}
-  worldPrefab: {fileID: 3944696517414679776, guid: 0bad2cf2e3990324887e0123dbfe7f17, type: 3}
+  worldPrefab: {fileID: 4572698129661701032, guid: 93150f3bd9a8c55489cdded5c8d0611d, type: 3}
