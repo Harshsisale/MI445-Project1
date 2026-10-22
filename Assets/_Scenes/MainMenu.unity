@@ -74637,7 +74637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3d878a464a7848992a7f807329e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  SceneName: EnvironmentArtpass
+  SceneName: puzzles
 --- !u!43 &81929132
 Mesh:
   m_ObjectHideFlags: 0
@@ -284713,6 +284713,10 @@ MonoBehaviour:
   hinge: {fileID: 322230761}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &322230763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284726,6 +284730,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -357736,6 +357742,10 @@ MonoBehaviour:
   hinge: {fileID: 404483502}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!1 &404728847
 GameObject:
   m_ObjectHideFlags: 0
@@ -590925,6 +590935,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -597683,6 +597695,10 @@ MonoBehaviour:
   hinge: {fileID: 682518718}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &682518716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597696,6 +597712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -597751,6 +597769,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -597793,6 +597813,10 @@ MonoBehaviour:
   hinge: {fileID: 682581501}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!43 &682627446
 Mesh:
   m_ObjectHideFlags: 0
@@ -724432,6 +724456,10 @@ MonoBehaviour:
   hinge: {fileID: 815108255}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &815108257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724445,6 +724473,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -746480,6 +746510,10 @@ MonoBehaviour:
   hinge: {fileID: 0}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &841395949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746493,6 +746527,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1690283,6 +1690319,10 @@ MonoBehaviour:
   hinge: {fileID: 1872790416}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!43 &1873341485
 Mesh:
   m_ObjectHideFlags: 0
@@ -1924360,6 +1924400,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
