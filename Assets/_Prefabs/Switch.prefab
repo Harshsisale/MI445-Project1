@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls: []

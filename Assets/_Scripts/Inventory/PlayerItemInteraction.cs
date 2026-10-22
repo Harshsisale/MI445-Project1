@@ -19,24 +19,33 @@ public class PlayerItemInteraction : MonoBehaviour
     public PlayerInventory Inventory => inventory;
     public ItemDefinition HeldItem => itemHolder != null ? itemHolder.EquippedItem : null;
     public IInteractable CurrentInteractable { get; private set; }
+    public RaycastHit CurrentHit { get; private set; }
 
     private InputAction interactAction;
+    private InputAction pickupAction;
 
     private void Awake()
     {
-        interactAction = playerInput.actions.FindAction("Interact");
+        interactAction = playerInput.actions.FindAction("Interact", true);
+        pickupAction = playerInput.actions.FindAction("Pickup", true);
     }
 
     private void Update()
     {
         CurrentInteractable = null;
+        CurrentHit = default;
 
         if (Cursor.lockState != CursorLockMode.Locked)
             return;
 
         CurrentInteractable = FindInteractable();
+        HandleInteractionInput();
+    }
 
-        if (interactAction.WasPressedThisFrame())
+    private void HandleInteractionInput()
+    {
+        InputAction action = CurrentInteractable is WorldItemPickup ? pickupAction : interactAction;
+        if (action.WasPressedThisFrame())
             CurrentInteractable?.Interact(this);
     }
 
@@ -49,13 +58,22 @@ public class PlayerItemInteraction : MonoBehaviour
             CurrentInteractable is MonoBehaviour target && target != null && target.isActiveAndEnabled;
 
         promptText.text = showPrompt
-            ? "E / Left click - " + CurrentInteractable.Prompt
+            ? GetInteractionPrompt()
             : "";
+    }
+
+    private string GetInteractionPrompt()
+    {
+        if (CurrentInteractable is SwitchInteractable switchInteractable)
+            return switchInteractable.GetInteractionPrompt(this);
+
+        return (CurrentInteractable is WorldItemPickup ? "E - " : "Left click - ") + CurrentInteractable.Prompt;
     }
 
     private void OnDisable()
     {
         CurrentInteractable = null;
+        CurrentHit = default;
 
         if (promptText != null)
             promptText.text = "";
@@ -84,7 +102,41 @@ public class PlayerItemInteraction : MonoBehaviour
         if (interactable is MonoBehaviour component && !component.isActiveAndEnabled)
             return null;
 
+        if (interactable is DiggableMound mound &&
+            TryFindBuriedPickup(ray, hit, mound, out RaycastHit pickupHit, out WorldItemPickup pickup))
+        {
+            hit = pickupHit;
+            interactable = pickup;
+        }
+
+        CurrentHit = hit;
         return interactable;
+    }
+
+    private bool TryFindBuriedPickup(Ray ray, RaycastHit moundHit, DiggableMound mound,
+        out RaycastHit pickupHit, out WorldItemPickup pickup)
+    {
+        pickupHit = default;
+        pickup = null;
+
+        const float surfaceOffset = 0.001f;
+        float reach = Mathf.Min(mound.GetBuriedPickupReach(moundHit), interactionRange - moundHit.distance);
+        if (reach <= surfaceOffset)
+            return false;
+
+        // Start just inside the excavated surface. The next collider must be
+        // a pickup; walls, ground and any other obstruction still block it.
+        Vector3 origin = moundHit.point + ray.direction * surfaceOffset;
+        if (!Physics.Raycast(origin, ray.direction, out pickupHit, reach - surfaceOffset,
+                interactionMask, QueryTriggerInteraction.Ignore))
+            return false;
+
+        pickup = pickupHit.collider.GetComponentInParent<WorldItemPickup>();
+        if (pickup == null || !pickup.isActiveAndEnabled)
+            return false;
+
+        pickupHit.distance += moundHit.distance + surfaceOffset;
+        return true;
     }
 }
 
