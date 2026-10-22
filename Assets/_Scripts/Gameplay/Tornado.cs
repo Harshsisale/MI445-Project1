@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tornado : MonoBehaviour
 {
@@ -99,5 +100,13 @@ public class Tornado : MonoBehaviour
 
         // Only world-Y spin is ever applied; X/Z tilt stays locked to the starting rotation.
         return Quaternion.AngleAxis(yaw, Vector3.up) * baseRotation;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }
