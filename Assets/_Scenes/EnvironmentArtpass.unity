@@ -285005,6 +285005,10 @@ MonoBehaviour:
   hinge: {fileID: 322230761}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &322230763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285018,6 +285022,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -358149,6 +358155,10 @@ MonoBehaviour:
   hinge: {fileID: 404483502}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!1 &404728847
 GameObject:
   m_ObjectHideFlags: 0
@@ -591687,6 +591697,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -598445,6 +598457,10 @@ MonoBehaviour:
   hinge: {fileID: 682518718}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &682518716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598458,6 +598474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -598513,6 +598531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -598555,6 +598575,10 @@ MonoBehaviour:
   hinge: {fileID: 682581501}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!43 &682627446
 Mesh:
   m_ObjectHideFlags: 0
@@ -725550,6 +725574,10 @@ MonoBehaviour:
   hinge: {fileID: 815108255}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &815108257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725563,6 +725591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -747598,6 +747628,10 @@ MonoBehaviour:
   hinge: {fileID: 0}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!114 &841395949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747611,6 +747645,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1237561,6 +1237597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tornado
       objectReference: {fileID: 0}
+    - target: {fileID: 1720829067454056711, guid: 8876024fd1cda714aa617cf73cbaeb8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3213960414586221204, guid: 8876024fd1cda714aa617cf73cbaeb8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 71.5
@@ -1688827,6 +1688867,10 @@ MonoBehaviour:
   hinge: {fileID: 1872790416}
   openAngle: 90
   openSpeed: 120
+  isLocked: 0
+  requiredKey: {fileID: 0}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!43 &1873341485
 Mesh:
   m_ObjectHideFlags: 0
@@ -1922965,6 +1923009,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwitchInteractable
   isOn: 0
+  requiredHeldItem: {fileID: 0}
+  missingItemPrompt: Press Left Click to offer sacrifice
   onChanged:
     m_PersistentCalls:
       m_Calls:

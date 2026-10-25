@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4131284, y: 1.1666328, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6341236313333994386}
@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 2.2, z: 0.12}
-  m_Center: {x: 0.55, y: 1.1, z: 0}
+  m_Size: {x: 1.1000009, y: 2.2, z: 0.18000008}
+  m_Center: {x: -0.5500005, y: 1.1000001, z: 0}
 --- !u!114 &6559337424808722943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,11 +65,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01265dfd62904dbf9a2bd47d4af7afe9, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteractable
   hinge: {fileID: 5583385172618436064}
-  openAngle: 90
+  openAngle: -90
   openSpeed: 120
+  isLocked: 1
+  requiredKey: {fileID: 11400000, guid: c70fea9bf4885904fa6bdcdb5220aae4, type: 2}
+  isOpen: 0
+  stateSource: {fileID: 0}
 --- !u!1 &4191233004841103130
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,9 +100,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4191233004841103130}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.55, y: 1.1, z: 0}
-  m_LocalScale: {x: 1.1, y: 2.2, z: 0.12}
+  m_LocalRotation: {x: -0.50000006, y: 0.49999997, z: 0.50000006, w: 0.49999997}
+  m_LocalPosition: {x: 0, y: 1.8648269, z: 0.0038056076}
+  m_LocalScale: {x: 49.278378, y: 109.064926, z: 135.28856}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5583385172618436064}
@@ -110,7 +114,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4191233004841103130}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5495902117074765545, guid: 17f93c550708a714a8efcd9787fa5f79, type: 3}
 --- !u!23 &8821455230284959255
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -136,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e529903a00967b47b6d09fee8ca6917, type: 2}
+  - {fileID: 2100000, guid: 13b16be9e77851c4398cf8a76528574e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

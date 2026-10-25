@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: 49ad34bcdc952aa4cbaa8723f411c55e
   - enabled: 1
+    path: Assets/_Scenes/Puzzles.unity
+    guid: c6c4310ad89d58e4e857b9072a895c43
+  - enabled: 0
     path: Assets/_Scenes/EnvironmentArtpass.unity
     guid: dd1e68e5b9a8e02458750d2df8d83c6a
   - enabled: 0
