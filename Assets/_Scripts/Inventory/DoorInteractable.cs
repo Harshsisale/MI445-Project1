@@ -13,7 +13,11 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     [Tooltip("Optional controlling door. Both doors use its open and locked state, and interactions from either side control it.")]
     [SerializeField] private DoorInteractable stateSource;
 
+    [Tooltip("Plays when this door goes from closed to open.")]
+    public AudioSource doorOpen;
+
     private Quaternion closedRotation;
+    private bool wasOpen;
 
     public bool IsOpen => stateSource != null ? stateSource.IsOpen : isOpen;
     public bool IsLocked => stateSource != null ? stateSource.IsLocked : isLocked;
@@ -35,6 +39,9 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         if (stateSource == null && isOpen)
             hinge.localRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
+
+        // Doors that start open shouldn't play the sound on the first frame.
+        wasOpen = IsOpen;
     }
 
     private void Update()
@@ -52,6 +59,8 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
     private void LateUpdate()
     {
+        UpdateOpenSound();
+
         if (stateSource == null)
             return;
 
@@ -63,6 +72,21 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
         hinge.localRotation = closedRotation *
             (Quaternion.Inverse(source.closedRotation) * source.hinge.localRotation);
+    }
+
+    private void UpdateOpenSound()
+    {
+        bool open = IsOpen;
+
+        if (open && !wasOpen && doorOpen != null)
+        {
+            doorOpen.Play();
+            Debug.Log("played");
+        }
+            
+        
+
+        wasOpen = open;
     }
 
     public void Interact(PlayerItemInteraction player)

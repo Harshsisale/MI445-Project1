@@ -127,6 +127,14 @@ public class BodyCamera : MonoBehaviour
     [Tooltip("Trauma lost per second.")]
     [SerializeField] private float traumaDecay = 1.4f;
 
+    [Header("Footstep Audio")]
+    [Tooltip("Plays on every other footstep, alternating with Right Foot.")]
+    public AudioSource leftFoot;
+    [Tooltip("Plays on every other footstep, alternating with Left Foot.")]
+    public AudioSource rightFoot;
+    [Tooltip("Random pitch variation per step so repeated clips don't sound robotic. 0 = off.")]
+    [SerializeField, Range(0f, 0.3f)] private float footstepPitchVariation = 0.05f;
+
     /// <summary>The most recently enabled BodyCamera (usually the Main Camera's).</summary>
     public static BodyCamera Active { get; private set; }
 
@@ -195,6 +203,9 @@ public class BodyCamera : MonoBehaviour
 
     private float lookPitch, lookYaw;
 
+    private bool nextStepIsLeft = true;
+    private float leftFootBasePitch = 1f, rightFootBasePitch = 1f;
+
     private Coroutine restoreRoutine;
     private static readonly WaitForEndOfFrame EndOfFrame = new WaitForEndOfFrame();
 
@@ -210,6 +221,9 @@ public class BodyCamera : MonoBehaviour
 
         if (characterController == null)
             characterController = GetComponentInParent<CharacterController>();
+
+        if (leftFoot != null) leftFootBasePitch = leftFoot.pitch;
+        if (rightFoot != null) rightFootBasePitch = rightFoot.pitch;
 
         seed = UnityEngine.Random.value * 100f;
         hasHistory = false;
@@ -443,7 +457,22 @@ public class BodyCamera : MonoBehaviour
     {
         Kick(ref impactPitch, stepKick * bobWeight, impactStiffness);
         Kick(ref impactY, -stepDip * bobWeight, impactStiffness);
+
+        PlayFootstepSound();
         Footstep?.Invoke();
+    }
+
+    private void PlayFootstepSound()
+    {
+        AudioSource source = nextStepIsLeft ? leftFoot : rightFoot;
+        float basePitch = nextStepIsLeft ? leftFootBasePitch : rightFootBasePitch;
+        nextStepIsLeft = !nextStepIsLeft;
+
+        if (source == null || source.clip == null)
+            return;
+
+        source.pitch = basePitch + UnityEngine.Random.Range(-footstepPitchVariation, footstepPitchVariation);
+        source.Play();
     }
 
     // ---------------------------------------------------------------------
