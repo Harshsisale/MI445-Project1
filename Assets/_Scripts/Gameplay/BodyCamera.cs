@@ -132,6 +132,12 @@ public class BodyCamera : MonoBehaviour
     public AudioSource leftFoot;
     [Tooltip("Plays on every other footstep, alternating with Left Foot.")]
     public AudioSource rightFoot;
+    [SerializeField] private AudioClip leftFootIndoors;
+    [SerializeField] private AudioClip rightFootIndoors;
+    [SerializeField] private AudioClip leftFootOutdoors;
+    [SerializeField] private AudioClip rightFootOutdoors;
+    [Tooltip("Ground layers used to choose footstep sounds. The player's layer is always excluded.")]
+    [SerializeField] private LayerMask footstepGroundMask = Physics.DefaultRaycastLayers;
     [Tooltip("Random pitch variation per step so repeated clips don't sound robotic. 0 = off.")]
     [SerializeField, Range(0f, 0.3f)] private float footstepPitchVariation = 0.05f;
 
@@ -144,6 +150,7 @@ public class BodyCamera : MonoBehaviour
     public float Trauma => trauma;
     public float HorizontalSpeed => horizontalSpeed;
     public bool Grounded => grounded;
+    public bool IsIndoors => IsFootstepIndoors();
 
     /// <summary>
     /// The ray that matches the center of the screen. In Locked mode this is the clean camera ray
@@ -204,6 +211,9 @@ public class BodyCamera : MonoBehaviour
     private float lookPitch, lookYaw;
 
     private bool nextStepIsLeft = true;
+    private bool isIndoors;
+    private bool wasWalking;
+    private PlayerMovement playerMovement;
     private float leftFootBasePitch = 1f, rightFootBasePitch = 1f;
 
     private Coroutine restoreRoutine;
@@ -222,6 +232,8 @@ public class BodyCamera : MonoBehaviour
         if (characterController == null)
             characterController = GetComponentInParent<CharacterController>();
 
+        playerMovement = GetComponentInParent<PlayerMovement>();
+        wasWalking = false;
         if (leftFoot != null) leftFootBasePitch = leftFoot.pitch;
         if (rightFoot != null) rightFootBasePitch = rightFoot.pitch;
 
@@ -255,6 +267,7 @@ public class BodyCamera : MonoBehaviour
         }
 
         RestoreCleanPose();
+        StopFootstepSounds();
 
         if (controlFOV && cam != null)
             cam.fieldOfView = originalFOV;
@@ -367,8 +380,11 @@ public class BodyCamera : MonoBehaviour
         horizontalSpeed = horizVel.magnitude;
         strafeSpeed = Vector3.Dot(horizVel, flatRight);
 
+        // Descending steps can briefly clear isGrounded even while a tread is
+        // within stepping distance. Probe across the foot's width to bridge edges.
         grounded = characterController != null
-            ? characterController.isGrounded
+            ? characterController.enabled && (characterController.isGrounded ||
+                (characterController.velocity.y <= 0.1f && TryGetFootstepGround(out _)))
             : Mathf.Abs(smoothedVel.y) < 1.5f;
 
         // --- Landing
@@ -414,23 +430,41 @@ public class BodyCamera : MonoBehaviour
         roll = Mathf.Lerp(roll, targetRoll, 1f - Mathf.Exp(-rollSmoothing * dt));
 
         // --- Walk bob
-        float moveRatio = walkSpeed > 0.01f ? horizontalSpeed / walkSpeed : 0f;
-        bool walking = grounded && horizontalSpeed > 0.3f;
+        // Use unsmoothed controller motion for footsteps: turning the camera, pushing
+        // against a wall, and the velocity smoothing tail must not produce steps.
+        Vector3 stepVelocity = characterController != null ? characterController.velocity : rawVel;
+        float stepSpeed = Vector3.ProjectOnPlane(stepVelocity, Vector3.up).magnitude;
+        float moveRatio = walkSpeed > 0.01f ? stepSpeed / walkSpeed : 0f;
+        bool movementAllowed = playerMovement == null ||
+            (playerMovement.isActiveAndEnabled && playerMovement.MovementEnabled);
+        bool walking = movementAllowed && grounded && stepSpeed > 0.1f;
         float targetWeight = walking ? Mathf.Clamp(moveRatio, 0f, 1.5f) : 0f;
         bobWeight = Mathf.Lerp(bobWeight, targetWeight, 1f - Mathf.Exp(-8f * dt));
 
         if (walking)
         {
-            float freq = stepsPerSecond * Mathf.Clamp(Mathf.Sqrt(moveRatio), 0.5f, 1.4f);
+            if (!wasWalking)
+            {
+                // Start on a footfall instead of waiting a full stride after input.
+                bobPhase = 0f;
+                OnFootstep();
+            }
+
+            float freq = stepsPerSecond * Mathf.Clamp(moveRatio, 0f, 2f);
             float prev = bobPhase;
-            bobPhase += freq * Mathf.PI * dt; // one footstep every PI radians
+            // Springs use a capped dt, but steps must keep pace with real movement time.
+            bobPhase += freq * Mathf.PI * Time.deltaTime; // one footstep every PI radians
 
             if (Mathf.Floor(bobPhase / Mathf.PI) != Mathf.Floor(prev / Mathf.PI))
                 OnFootstep();
 
-            if (bobPhase >= Mathf.PI * 2f)
-                bobPhase -= Mathf.PI * 2f;
+            bobPhase = Mathf.Repeat(bobPhase, Mathf.PI * 2f);
         }
+        else if (!movementAllowed)
+        {
+            StopFootstepSounds();
+        }
+        wasWalking = walking;
 
         // --- Impact springs
         impactY.Step(0f, impactStiffness, impactDamping, dt);
@@ -466,13 +500,53 @@ public class BodyCamera : MonoBehaviour
     {
         AudioSource source = nextStepIsLeft ? leftFoot : rightFoot;
         float basePitch = nextStepIsLeft ? leftFootBasePitch : rightFootBasePitch;
+        bool indoors = IsFootstepIndoors();
+        AudioClip clip = indoors
+            ? (nextStepIsLeft ? leftFootIndoors : rightFootIndoors)
+            : (nextStepIsLeft ? leftFootOutdoors : rightFootOutdoors);
         nextStepIsLeft = !nextStepIsLeft;
 
-        if (source == null || source.clip == null)
+        if (source == null)
             return;
+
+        // Preserve existing setups that only assign the AudioSource's clip.
+        if (clip != null) source.clip = clip;
+        if (source.clip == null) return;
 
         source.pitch = basePitch + UnityEngine.Random.Range(-footstepPitchVariation, footstepPitchVariation);
         source.Play();
+    }
+
+    private bool IsFootstepIndoors()
+    {
+        if (!TryGetFootstepGround(out RaycastHit hit))
+            return isIndoors;
+
+        FootstepSurface surface = hit.collider.GetComponentInParent<FootstepSurface>();
+        isIndoors = surface != null && surface.Indoors;
+        return isIndoors;
+    }
+
+    private bool TryGetFootstepGround(out RaycastHit hit)
+    {
+        hit = default;
+        if (characterController == null || !characterController.enabled)
+            return false;
+
+        Bounds bounds = characterController.bounds;
+        int groundMask = footstepGroundMask & ~(1 << characterController.gameObject.layer);
+        float radius = Mathf.Min(bounds.extents.x, bounds.extents.z) * 0.85f;
+        float reach = characterController.stepOffset + characterController.skinWidth + 0.05f;
+        float distance = bounds.extents.y - radius + reach;
+
+        return Physics.SphereCast(bounds.center, radius, Vector3.down, out hit,
+            distance, groundMask, QueryTriggerInteraction.Ignore) && hit.normal.y > 0.2f;
+    }
+
+    private void StopFootstepSounds()
+    {
+        if (leftFoot != null) leftFoot.Stop();
+        if (rightFoot != null) rightFoot.Stop();
     }
 
     // ---------------------------------------------------------------------

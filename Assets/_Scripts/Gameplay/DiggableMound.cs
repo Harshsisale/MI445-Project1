@@ -138,6 +138,7 @@ public class DiggableMound : MonoBehaviour, IInteractable
         runtimeMesh.RecalculateBounds();
         RefreshCollider();
         HasBeenDug = true;
+        player.GetComponent<PlayerInteractionAudio>()?.PlayDig();
         return true;
     }
 

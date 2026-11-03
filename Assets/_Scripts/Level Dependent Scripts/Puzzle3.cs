@@ -52,7 +52,12 @@ public class Puzzle3 : MonoBehaviour
                         PlacedObjectsPosition[PlacedObjects.Count].rotation
                     );
                     Destroy(spawned.GetComponent<WorldItemPickup>());
-                    inventory.RemoveFromSlot(index, 1);
+                    if (!inventory.RemoveFromSlot(index, 1))
+                    {
+                        Destroy(spawned);
+                        return;
+                    }
+                    inventory.GetComponent<PlayerInteractionAudio>()?.PlayPickup();
                     
 
                     PlacedObjects.Add(itDef);
