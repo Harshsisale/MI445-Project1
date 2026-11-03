@@ -57,6 +57,12 @@ public class PlayerItemHolder : MonoBehaviour
         EquippedItem = null;
     }
 
+    public void SetHeldModelVisible(bool visible)
+    {
+        if (heldModel != null)
+            heldModel.SetActive(visible);
+    }
+
     private void CheckEquippedItem()
     {
         if (EquippedItem != null && !inventory.HasItem(EquippedItem))
