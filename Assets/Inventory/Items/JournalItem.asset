@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470724e69d088cb40bc567391a1933d3, type: 3}
+  m_Name: JournalItem
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: journal
+  displayName: Journal
+  description: A worn journal containing notes and clues.
+  maxStackSize: 1
+  canDrop: 1
+  canEquip: 1
+  canRead: 1
+  canUse: 0
+  heldPrefab: {fileID: 2172381523958228574, guid: 35383de84d486bd4da1a6b8ff29eac75, type: 3}
+  icon: {fileID: 21300000, guid: a3425d5496b33554b859590a8bb7d6b1, type: 3}
+  worldPrefab: {fileID: 5628607688000962778, guid: c1f54572275e0b44faf129fb9ccfbb1b, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 1
