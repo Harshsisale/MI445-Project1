@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
@@ -13,6 +14,10 @@ public class JournalPageController : MonoBehaviour
 
     [Header("Page Sprites")]
     [SerializeField] private Sprite[] pageSpreads;
+
+    [Header("Page Content")]
+    [SerializeField] private GameObject linedTextContent;
+    [SerializeField, Min(0)] private int linedSpreadIndex = 2;
 
     [Header("Page Transition")]
     [SerializeField, Min(0f)] private float lowerDistance = 900f;
@@ -56,6 +61,7 @@ public class JournalPageController : MonoBehaviour
         currentPage = 0;
         bookImage.sprite = pageSpreads[currentPage];
         initialized = true;
+        UpdatePageContent();
     }
 
     private void OnEnable()
@@ -66,10 +72,13 @@ public class JournalPageController : MonoBehaviour
         previousButton.onClick.AddListener(PreviousPage);
         nextButton.onClick.AddListener(NextPage);
         UpdateButtons();
+        UpdatePageContent();
     }
 
     private void OnDisable()
     {
+        ClearTextFocus();
+
         if (previousButton != null)
         {
             previousButton.onClick.RemoveListener(PreviousPage);
@@ -109,6 +118,7 @@ public class JournalPageController : MonoBehaviour
     private IEnumerator PageTurnRoutine(int targetPage)
     {
         isTurning = true;
+        ClearTextFocus();
         UpdateButtons();
 
         Vector2 loweredPosition = originalPosition + Vector2.down * lowerDistance;
@@ -116,6 +126,7 @@ public class JournalPageController : MonoBehaviour
 
         currentPage = targetPage;
         bookImage.sprite = pageSpreads[currentPage];
+        UpdatePageContent();
 
         if (audioSource != null && pageTurnSound != null)
             audioSource.PlayOneShot(pageTurnSound);
@@ -141,6 +152,29 @@ public class JournalPageController : MonoBehaviour
         }
 
         bookContainer.anchoredPosition = end;
+    }
+
+    private void UpdatePageContent()
+    {
+        if (linedTextContent == null)
+            return;
+
+        bool showText = currentPage == linedSpreadIndex;
+        if (!showText)
+            ClearTextFocus();
+
+        linedTextContent.SetActive(showText);
+    }
+
+    private void ClearTextFocus()
+    {
+        EventSystem eventSystem = EventSystem.current;
+        if (linedTextContent == null || eventSystem == null)
+            return;
+
+        GameObject selected = eventSystem.currentSelectedGameObject;
+        if (selected != null && selected.transform.IsChildOf(linedTextContent.transform))
+            eventSystem.SetSelectedGameObject(null);
     }
 
     private void UpdateButtons()
