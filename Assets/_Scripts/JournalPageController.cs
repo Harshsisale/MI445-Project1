@@ -18,6 +18,8 @@ public class JournalPageController : MonoBehaviour
     [Header("Page Content")]
     [SerializeField] private GameObject linedTextContent;
     [SerializeField, Min(0)] private int linedSpreadIndex = 2;
+    [SerializeField] private GameObject drawingContent;
+    [SerializeField, Min(0)] private int drawingSpreadIndex = 3;
 
     [Header("Page Transition")]
     [SerializeField, Min(0f)] private float lowerDistance = 900f;
@@ -156,14 +158,15 @@ public class JournalPageController : MonoBehaviour
 
     private void UpdatePageContent()
     {
-        if (linedTextContent == null)
-            return;
-
         bool showText = currentPage == linedSpreadIndex;
         if (!showText)
             ClearTextFocus();
 
-        linedTextContent.SetActive(showText);
+        if (linedTextContent != null)
+            linedTextContent.SetActive(showText);
+
+        if (drawingContent != null)
+            drawingContent.SetActive(currentPage == drawingSpreadIndex);
     }
 
     private void ClearTextFocus()
