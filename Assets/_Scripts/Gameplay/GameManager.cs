@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public Light envLight;
     public float minLightIntensity = 0.2f;
     public float maxLightIntensity = 0.8f;
+    public AudioSource tornadoSFX;
+    private bool tornadoChaseRO;
   
 
     void Start()
@@ -39,8 +41,14 @@ public class GameManager : MonoBehaviour
 
     void TornadoChase()
     {
-        tornado.SetActive(true);
-        tornado2.SetActive(true);
+        if (!tornadoChaseRO)
+        {
+            tornadoSFX.Play();
+            tornado.SetActive(true);
+            tornado2.SetActive(true);
+            tornadoChaseRO = true;
+        }
+   
     }
     
     private void UpdateRenderScale()
