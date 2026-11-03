@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470724e69d088cb40bc567391a1933d3, type: 3}
+  m_Name: Thoob-os
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: Thoob-Os
+  displayName: Thoob-Os
+  description: Where is the rest...?
+  maxStackSize: 1
+  canDrop: 1
+  canEquip: 1
+  canRead: 0
+  canUse: 1
+  heldPrefab: {fileID: 8301815613396111386, guid: 44aeb1dde69bb1842baae3017cafcdc1, type: 3}
+  icon: {fileID: 0}
+  worldPrefab: {fileID: 5660092660557280762, guid: cfc4d217c918a3a448808f85ce4e62c3, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0
