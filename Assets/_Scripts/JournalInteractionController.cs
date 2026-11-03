@@ -63,7 +63,7 @@ public class JournalInteractionController : MonoBehaviour
             return;
         }
 
-        if (keyboard != null && keyboard.jKey.wasPressedThisFrame &&
+        if (keyboard != null && keyboard.fKey.wasPressedThisFrame &&
             Cursor.lockState == CursorLockMode.Locked)
             OpenJournal();
     }
