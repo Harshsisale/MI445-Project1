@@ -15,6 +15,11 @@ public class JournalInteractionController : MonoBehaviour
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private InventoryUI inventoryUI;
 
+    [Header("HUD")]
+    [SerializeField] private TMP_Text instructionsText;
+
+    private string defaultInstructions;
+    private string journalInstructions;
     private TMP_InputField[] noteInputs;
     private bool initialized;
     private bool isOpen;
@@ -27,6 +32,12 @@ public class JournalInteractionController : MonoBehaviour
 
     private void Awake()
     {
+        if (instructionsText != null)
+        {
+            defaultInstructions = instructionsText.text;
+            journalInstructions = defaultInstructions + "\nPress F to open journal";
+        }
+
         if (journalUI != null)
             journalUI.SetActive(false);
 
@@ -66,6 +77,23 @@ public class JournalInteractionController : MonoBehaviour
         if (keyboard != null && keyboard.fKey.wasPressedThisFrame &&
             Cursor.lockState == CursorLockMode.Locked)
             OpenJournal();
+    }
+
+    private void LateUpdate()
+    {
+        if (instructionsText == null)
+            return;
+
+        bool showJournalHint = initialized && !isOpen &&
+            itemHolder.EquippedItem == journalItem &&
+            Cursor.lockState == CursorLockMode.Locked &&
+            (inventoryUI == null || !inventoryUI.IsOpen);
+        string instructions = showJournalHint
+            ? journalInstructions
+            : defaultInstructions;
+
+        if (instructionsText.text != instructions)
+            instructionsText.text = instructions;
     }
 
     public void OpenJournal()
@@ -141,6 +169,8 @@ public class JournalInteractionController : MonoBehaviour
     private void OnDisable()
     {
         CloseJournal();
+        if (instructionsText != null && defaultInstructions != null)
+            instructionsText.text = defaultInstructions;
     }
 
     private void OnDestroy()
