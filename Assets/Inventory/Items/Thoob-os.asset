@@ -20,7 +20,7 @@ MonoBehaviour:
   canEquip: 1
   canRead: 0
   canUse: 1
-  heldPrefab: {fileID: 8301815613396111386, guid: 44aeb1dde69bb1842baae3017cafcdc1, type: 3}
+  heldPrefab: {fileID: 5660092660557280762, guid: cfc4d217c918a3a448808f85ce4e62c3, type: 3}
   icon: {fileID: 0}
   worldPrefab: {fileID: 5660092660557280762, guid: cfc4d217c918a3a448808f85ce4e62c3, type: 3}
   worldModelScale: {x: 1, y: 1, z: 1}
