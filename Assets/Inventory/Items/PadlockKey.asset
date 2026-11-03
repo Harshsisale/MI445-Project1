@@ -17,7 +17,7 @@ MonoBehaviour:
   description: A large key which came with a padlock. Doesn't fit most locks.
   maxStackSize: 1
   canDrop: 1
-  canEquip: 1
+  canEquip: 0
   canRead: 0
   canUse: 1
   heldPrefab: {fileID: 234739118628192406, guid: fcb5947f121c6264c97f09da5098f0cd, type: 3}
