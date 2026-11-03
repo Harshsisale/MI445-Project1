@@ -8,21 +8,44 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// First-person body cam effect. Drop it on the Main Camera.
 ///
-/// Adds: chest-mount offset, wide FOV, look lag with overshoot, turn/strafe roll,
-/// walk bob with footstep kicks, landing impacts, handheld sway/jitter, and trauma shake.
+/// Adds: chest-mount offset, wide FOV, look lag, turn/strafe roll, walk bob with footstep kicks,
+/// landing impacts, handheld sway/jitter, and trauma shake.
 ///
-/// Works alongside any existing player controller: the effect is layered on top in LateUpdate
-/// and stripped back off at the end of the frame, so your controller (and raycasts that use
-/// the camera transform) always see the clean, un-shaken pose.
+/// RAYCAST SAFETY
+/// The effect is layered on in LateUpdate and stripped back off at the end of the frame, so your
+/// controller and any raycasts using the camera transform always see the clean pose.
+/// In "Locked To Crosshair" aim mode (default), the displayed view is also kept converged on the
+/// point that clean ray hits, so the screen center always shows exactly what your raycasts hit.
+/// No changes to your raycast scripts are needed.
 /// </summary>
 [DefaultExecutionOrder(10000)]
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Camera))]
 public class BodyCamera : MonoBehaviour
 {
+    public enum AimMode
+    {
+        [Tooltip("Screen center always matches raycasts. Wobble moves the camera instead of turning it off-target.")]
+        LockedToCrosshair,
+        [Tooltip("Full rotational wobble. Screen center can drift off what raycasts hit; use BodyCamera.AimRay to match.")]
+        Free
+    }
+
     [Header("Master")]
     [Tooltip("Scales every motion effect. 0 = off, 1 = default. Hook this to a motion-sickness slider.")]
     [Range(0f, 2f)] public float intensity = 1f;
+
+    [Header("Aim / Raycasts")]
+    [SerializeField] private AimMode aimMode = AimMode.LockedToCrosshair;
+    [Tooltip("Layers the aim ray can hit. Exclude your Player layer (and viewmodel layer) here.")]
+    [SerializeField] private LayerMask aimMask = Physics.DefaultRaycastLayers;
+    [SerializeField] private float maxAimDistance = 100f;
+    [Tooltip("Aim point is never closer than this, to avoid extreme angles when hugging walls.")]
+    [SerializeField] private float minAimDistance = 0.75f;
+    [Tooltip("How fast the convergence adapts when the aim ray jumps between near and far surfaces.")]
+    [SerializeField] private float aimSmoothing = 18f;
+    [Tooltip("Locked mode only: metres of camera movement per degree of wobble (lag, sway, shake, bob).")]
+    [SerializeField] private float wobbleToPosition = 0.006f;
 
     [Header("Mount")]
     [Tooltip("Offset from the camera's normal spot, in the player's facing space (x = right, y = up, z = forward). " +
@@ -104,12 +127,22 @@ public class BodyCamera : MonoBehaviour
     [Tooltip("Trauma lost per second.")]
     [SerializeField] private float traumaDecay = 1.4f;
 
+    /// <summary>The most recently enabled BodyCamera (usually the Main Camera's).</summary>
+    public static BodyCamera Active { get; private set; }
+
     /// <summary>Fires on every footstep while grounded and moving. Hook footstep audio here.</summary>
     public event Action Footstep;
 
     public float Trauma => trauma;
     public float HorizontalSpeed => horizontalSpeed;
     public bool Grounded => grounded;
+
+    /// <summary>
+    /// The ray that matches the center of the screen. In Locked mode this is the clean camera ray
+    /// (identical to camera.transform.position/forward during Update). In Free mode it follows the
+    /// wobbling view. Use this only if you switch to Free mode and want raycasts to follow the view.
+    /// </summary>
+    public Ray AimRay => hasAimRay ? new Ray(aimRayOrigin, aimRayDirection) : new Ray(transform.position, transform.forward);
 
     /// <summary>Add camera shake. 0.1 = light bump, 0.4 = nearby explosion, 1 = max.</summary>
     public void AddShake(float amount) => trauma = Mathf.Clamp01(trauma + amount);
@@ -155,6 +188,11 @@ public class BodyCamera : MonoBehaviour
     private float currentFOV;
     private float seed;
 
+    private float aimInverseDistance;
+    private bool hasAimDistance;
+    private Vector3 aimRayOrigin, aimRayDirection;
+    private bool hasAimRay;
+
     private float lookPitch, lookYaw;
 
     private Coroutine restoreRoutine;
@@ -164,6 +202,8 @@ public class BodyCamera : MonoBehaviour
 
     private void OnEnable()
     {
+        Active = this;
+
         cam = GetComponent<Camera>();
         originalFOV = cam.fieldOfView;
         currentFOV = controlFOV ? baseFOV : cam.fieldOfView;
@@ -173,6 +213,8 @@ public class BodyCamera : MonoBehaviour
 
         seed = UnityEngine.Random.value * 100f;
         hasHistory = false;
+        hasAimDistance = false;
+        hasAimRay = false;
         applied = false;
 
         Vector3 e = transform.localEulerAngles;
@@ -190,6 +232,8 @@ public class BodyCamera : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Active == this) Active = null;
+
         if (restoreRoutine != null)
         {
             StopCoroutine(restoreRoutine);
@@ -212,10 +256,11 @@ public class BodyCamera : MonoBehaviour
     {
         CaptureCleanPose();
 
-        float dt = Time.deltaTime;
+        float dt = Mathf.Min(Time.deltaTime, 0.05f);
         if (dt > 0f)
-            Simulate(Mathf.Min(dt, 0.05f));
+            Simulate(dt);
 
+        UpdateAimDistance(dt);
         ApplyEffects();
     }
 
@@ -252,6 +297,34 @@ public class BodyCamera : MonoBehaviour
 
         cleanLocalPos = transform.localPosition;
         cleanLocalRot = transform.localRotation;
+    }
+
+    // ---------------------------------------------------------------------
+    // Aim convergence
+
+    private void UpdateAimDistance(float dt)
+    {
+        Vector3 origin = transform.position;
+        Vector3 dir = transform.forward;
+
+        float distance = maxAimDistance;
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, maxAimDistance, aimMask, QueryTriggerInteraction.Ignore))
+            distance = hit.distance;
+
+        distance = Mathf.Max(distance, minAimDistance);
+        float targetInverse = 1f / distance;
+
+        // Smooth in 1/distance space: the convergence angle scales with 1/d,
+        // so this gives an even angular blend when the ray jumps near <-> far.
+        if (!hasAimDistance)
+        {
+            aimInverseDistance = targetInverse;
+            hasAimDistance = true;
+        }
+        else if (dt > 0f)
+        {
+            aimInverseDistance = Mathf.Lerp(aimInverseDistance, targetInverse, 1f - Mathf.Exp(-aimSmoothing * dt));
+        }
     }
 
     // ---------------------------------------------------------------------
@@ -386,7 +459,7 @@ public class BodyCamera : MonoBehaviour
         float shake = trauma * trauma;
         float idleScale = 1f - 0.6f * Mathf.Clamp01(w); // less idle sway while walking
 
-        // Position (facing space)
+        // Position offset (facing space)
         Vector3 offset = mountOffset;
         offset.x += s * bobSideways * w * k;
         offset.y += (absS - 0.5f) * 2f * bobVertical * w * k;
@@ -396,7 +469,7 @@ public class BodyCamera : MonoBehaviour
             Noise(2, t * shakeFrequency),
             Noise(3, t * shakeFrequency)) * (maxShakeOffset * shake * k);
 
-        // Rotation (degrees)
+        // Rotational wobble (degrees)
         float pitch =
             lagPitch.value +
             impactPitch.value +
@@ -421,12 +494,44 @@ public class BodyCamera : MonoBehaviour
         yaw *= k;
         rollTotal *= k;
 
-        Vector3 pos = transform.position;
-        Quaternion rot = transform.rotation;
-        Quaternion facing = Quaternion.LookRotation(FlatForward(rot), Vector3.up);
+        // Clean pose (what the controller set and what raycasts use)
+        Vector3 cleanPos = transform.position;
+        Quaternion cleanRot = transform.rotation;
+        Vector3 cleanFwd = cleanRot * Vector3.forward;
+        Quaternion facing = Quaternion.LookRotation(FlatForward(cleanRot), Vector3.up);
 
-        transform.position = pos + facing * offset;
-        transform.rotation = Quaternion.AngleAxis(yaw, Vector3.up) * rot * Quaternion.Euler(pitch, 0f, rollTotal);
+        Vector3 displayPos;
+        Quaternion displayRot;
+
+        if (aimMode == AimMode.LockedToCrosshair)
+        {
+            // Turn rotational wobble into small camera movement, then aim the view back at the
+            // exact point the clean ray hits. Roll spins around the view axis, so it's kept as-is.
+            offset.x += yaw * wobbleToPosition;
+            offset.y -= pitch * wobbleToPosition;
+
+            displayPos = cleanPos + facing * offset;
+
+            Vector3 aimPoint = cleanPos + cleanFwd * (1f / aimInverseDistance);
+            Vector3 toAim = aimPoint - displayPos;
+            if (toAim.sqrMagnitude < 1e-6f) toAim = cleanFwd;
+
+            displayRot = Quaternion.LookRotation(toAim, cleanRot * Vector3.up) * Quaternion.Euler(0f, 0f, rollTotal);
+
+            aimRayOrigin = cleanPos;
+            aimRayDirection = cleanFwd;
+        }
+        else
+        {
+            displayPos = cleanPos + facing * offset;
+            displayRot = Quaternion.AngleAxis(yaw, Vector3.up) * cleanRot * Quaternion.Euler(pitch, 0f, rollTotal);
+
+            aimRayOrigin = displayPos;
+            aimRayDirection = displayRot * Vector3.forward;
+        }
+        hasAimRay = true;
+
+        transform.SetPositionAndRotation(displayPos, displayRot);
 
         if (controlFOV)
             cam.fieldOfView = currentFOV;
