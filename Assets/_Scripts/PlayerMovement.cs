@@ -24,9 +24,12 @@ public class PlayerMovement : MonoBehaviour
     private bool sprintHeld;
     private bool allowMouseLook = true;
     private bool allowMovement = true;
+    private bool cutsceneInputLocked;
 
-    public bool MouseLookEnabled => allowMouseLook;
-    public bool MovementEnabled => allowMovement;
+    public bool MouseLookEnabled => allowMouseLook && !cutsceneInputLocked;
+    public bool MovementEnabled => allowMovement && !cutsceneInputLocked;
+    public bool CutsceneInputLocked => cutsceneInputLocked;
+    public float ViewPitch => cameraPitch;
 
     private float verticalVelocity;
     private float cameraPitch;
@@ -44,14 +47,36 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        if (allowMouseLook)
+        if (MouseLookEnabled)
             HandleMouseLook();
+    }
+
+    private void OnDisable()
+    {
+        moveInput = Vector2.zero;
+        lookInput = Vector2.zero;
+        sprintHeld = false;
     }
 
     public void SetMouseLookEnabled(bool enabled)
     {
         allowMouseLook = enabled;
         lookInput = Vector2.zero;
+    }
+
+    public void SetCutsceneInputLocked(bool locked)
+    {
+        cutsceneInputLocked = locked;
+        moveInput = Vector2.zero;
+        lookInput = Vector2.zero;
+        sprintHeld = false;
+    }
+
+    public void SetViewPitch(float pitch)
+    {
+        cameraPitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+        if (playerCamera != null)
+            playerCamera.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
     }
 
     public void SetMovementEnabled(bool enabled)
@@ -71,24 +96,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        moveInput = isActiveAndEnabled && MovementEnabled
+            ? context.ReadValue<Vector2>() : Vector2.zero;
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        lookInput = allowMouseLook ? context.ReadValue<Vector2>() : Vector2.zero;
+        lookInput = isActiveAndEnabled && MouseLookEnabled ? context.ReadValue<Vector2>() : Vector2.zero;
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        sprintHeld = context.ReadValueAsButton();
+        sprintHeld = isActiveAndEnabled && MovementEnabled && context.ReadValueAsButton();
     }
 
     // Movement
 
 private void HandleMovement()
 {
-    Vector2 effectiveInput = allowMovement ? moveInput : Vector2.zero;
+    Vector2 effectiveInput = MovementEnabled ? moveInput : Vector2.zero;
     Vector3 direction =
         transform.right * effectiveInput.x +
         transform.forward * effectiveInput.y;
@@ -105,7 +131,7 @@ private void HandleMovement()
 
     // Sprint while Shift is held, we're moving forward,
     // and we still have sprint time remaining.
-    if (allowMovement && sprintHeld && movingForward && canSprint)
+    if (MovementEnabled && sprintHeld && movingForward && canSprint)
     {
         currentSpeed = sprintSpeed;
 

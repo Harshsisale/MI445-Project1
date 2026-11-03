@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2349993486927692020}
   - component: {fileID: 7198899591157857083}
   - component: {fileID: -1896582077230394712}
+  - component: {fileID: 9100000000000001001}
   m_Layer: 0
   m_Name: Floor2
   m_TagString: Untagged
@@ -113,3 +114,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 9176310897612776759, guid: 973690868a4b7fe40bf8b6a1e8328edb, type: 3}
+--- !u!114 &9100000000000001001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793532471244517455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abce49319e04c6f87f0e96cac6d7be6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::FootstepSurface
+  indoors: 1

@@ -6,6 +6,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform hinge;
     [SerializeField] private float openAngle = 90f;
+    [Tooltip("Swing speed in degrees/second when no interaction audio clip is assigned.")]
     [SerializeField, Min(1f)] private float openSpeed = 120f;
     [SerializeField] private bool isLocked;
     [SerializeField] private ItemDefinition requiredKey;
@@ -17,6 +18,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     public AudioSource doorOpen;
 
     private Quaternion closedRotation;
+    private float swingSpeed;
 
     public bool IsOpen => stateSource != null ? stateSource.IsOpen : isOpen;
     public bool IsLocked => stateSource != null ? stateSource.IsLocked : isLocked;
@@ -30,6 +32,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             hinge = transform;
 
         closedRotation = hinge.localRotation;
+        swingSpeed = openSpeed;
         if (isLocked)
             isOpen = false;
     }
@@ -50,7 +53,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             : closedRotation;
 
         hinge.localRotation = Quaternion.RotateTowards(
-            hinge.localRotation, target, openSpeed * Time.deltaTime);
+            hinge.localRotation, target, swingSpeed * Time.deltaTime);
     }
 
     private void LateUpdate()
@@ -80,8 +83,12 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         }
 
         // Play once at the interacted doorway, falling back to its controlling door.
-        if (controllingDoor.ToggleDoor(player) && interactionSound != null)
-            interactionSound.Play();
+        if (controllingDoor.ToggleDoor(player))
+        {
+            controllingDoor.MatchSwingToAudio(interactionSound);
+            if (interactionSound != null)
+                interactionSound.Play();
+        }
     }
 
     private bool ToggleDoor(PlayerItemInteraction player)
@@ -111,6 +118,22 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             return;
 
         isOpen = open;
+        MatchSwingToAudio(doorOpen);
+    }
+
+    private void MatchSwingToAudio(AudioSource source)
+    {
+        swingSpeed = openSpeed;
+        if (source == null || source.clip == null)
+            return;
+
+        // Use the sound at the interacted doorway, including its pitch. Reversing
+        // partway through a swing still takes one full playback to reach its target.
+        float duration = source.clip.length / Mathf.Max(Mathf.Abs(source.pitch), 0.01f);
+        Quaternion target = isOpen
+            ? closedRotation * Quaternion.Euler(0f, openAngle, 0f)
+            : closedRotation;
+        swingSpeed = Quaternion.Angle(hinge.localRotation, target) / Mathf.Max(duration, 0.01f);
     }
 
     public void SetLocked(bool locked)

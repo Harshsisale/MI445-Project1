@@ -99,6 +99,7 @@ public class JournalInteractionController : MonoBehaviour
     public void OpenJournal()
     {
         if (!initialized || !isActiveAndEnabled || isOpen ||
+            movement.CutsceneInputLocked ||
             itemHolder.EquippedItem != journalItem || !journalItem.canRead ||
             (inventoryUI != null && inventoryUI.IsOpen))
             return;

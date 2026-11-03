@@ -37,6 +37,7 @@ public class WorldItemPickup : MonoBehaviour, IInteractable
             return false;
         }
 
+        inventory.GetComponent<PlayerInteractionAudio>()?.PlayPickup();
         gameObject.SetActive(false);
         Destroy(gameObject);
         return true;

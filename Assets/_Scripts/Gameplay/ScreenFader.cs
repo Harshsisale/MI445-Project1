@@ -23,9 +23,19 @@ public class ScreenFader : MonoBehaviour
 
     private GameObject canvasObj;
     private CanvasGroup group;
+    private Image fadeImage;
+    private bool transitionInProgress;
+    private static string nextSceneName;
+    private static float nextSceneFadeInDuration;
 
     void Awake()
     {
+        if (gameObject.scene.name == nextSceneName)
+        {
+            fadeInDuration = nextSceneFadeInDuration;
+            startDelay = 0f;
+            nextSceneName = null;
+        }
         BuildOverlay();
 
         // Start fully covered so there's no one-frame flash of the level.
@@ -35,7 +45,8 @@ public class ScreenFader : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(FadeInRoutine());
+        if (!transitionInProgress)
+            StartCoroutine(FadeInRoutine());
     }
 
     /// <summary>
@@ -43,8 +54,43 @@ public class ScreenFader : MonoBehaviour
     /// </summary>
     public void FadeOutAndLoad(string sceneName)
     {
+        transitionInProgress = true;
         StopAllCoroutines();
         StartCoroutine(FadeOutRoutine(sceneName));
+    }
+
+    public static void PrepareSceneFadeIn(string sceneName, float duration)
+    {
+        nextSceneName = sceneName;
+        nextSceneFadeInDuration = Mathf.Max(0f, duration);
+    }
+
+    public IEnumerator HoldBlack(float duration)
+    {
+        // This routine is driven by the cutscene, so stopping this component's
+        // startup fade cannot cancel the cutscene's countdown or scene change.
+        transitionInProgress = true;
+        StopAllCoroutines();
+        canvasObj.SetActive(true);
+        canvasObj.GetComponent<Canvas>().sortingOrder = short.MaxValue;
+        if (canvasObj.GetComponent<GraphicRaycaster>() == null)
+            canvasObj.AddComponent<GraphicRaycaster>();
+        group.blocksRaycasts = true;
+        fadeImage.raycastTarget = true;
+        fadeImage.color = Color.black;
+        group.alpha = 1f;
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, duration));
+    }
+
+    public void ClearBlackout()
+    {
+        StopAllCoroutines();
+        transitionInProgress = false;
+        group.alpha = 0f;
+        group.blocksRaycasts = false;
+        fadeImage.raycastTarget = false;
+        fadeImage.color = fadeColor;
+        canvasObj.SetActive(false);
     }
 
     private IEnumerator FadeInRoutine()
@@ -115,11 +161,11 @@ public class ScreenFader : MonoBehaviour
         GameObject imageObj = new GameObject("FadeImage");
         imageObj.transform.SetParent(canvasObj.transform, false);
 
-        Image image = imageObj.AddComponent<Image>();
-        image.color = fadeColor;
-        image.raycastTarget = false; // clicks pass straight through to UI underneath
+        fadeImage = imageObj.AddComponent<Image>();
+        fadeImage.color = fadeColor;
+        fadeImage.raycastTarget = false; // clicks pass straight through to UI underneath
 
-        RectTransform rt = image.rectTransform;
+        RectTransform rt = fadeImage.rectTransform;
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;

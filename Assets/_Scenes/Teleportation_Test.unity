@@ -2724,6 +2724,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800544723}
+  - component: {fileID: 9100000000000000501}
   m_Layer: 0
   m_Name: House2
   m_TagString: Untagged
@@ -10985,6 +10986,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+--- !u!114 &9100000000000000501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800544722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abce49319e04c6f87f0e96cac6d7be6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::FootstepSurface
+  indoors: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

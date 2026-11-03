@@ -30,6 +30,8 @@ public class SwitchInteractable : MonoBehaviour, IInteractable
             return;
 
         SetOn(!isOn);
+        if (player != null)
+            player.GetComponent<PlayerInteractionAudio>()?.PlaySwitch();
     }
 
     private bool IsMissingRequiredItem(PlayerItemInteraction player)

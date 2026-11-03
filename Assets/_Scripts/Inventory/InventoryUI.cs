@@ -28,6 +28,8 @@ public class InventoryUI : MonoBehaviour
     private InputAction toggleAction;
     private int selectedIndex = -1;
     private bool isOpen;
+    private bool previousMovement;
+    private bool previousMouseLook;
 
     public bool IsOpen => isOpen;
 
@@ -65,6 +67,9 @@ public class InventoryUI : MonoBehaviour
 
     public void Toggle()
     {
+        if (movement != null && movement.CutsceneInputLocked)
+            return;
+
         if (journalController != null && journalController.IsOpen)
             return;
 
@@ -79,7 +84,18 @@ public class InventoryUI : MonoBehaviour
 
         if (movement != null)
         {
-            movement.enabled = !isOpen;
+            if (isOpen)
+            {
+                previousMovement = movement.MovementEnabled;
+                previousMouseLook = movement.MouseLookEnabled;
+                movement.SetMovementEnabled(false);
+                movement.SetMouseLookEnabled(false);
+            }
+            else
+            {
+                movement.SetMovementEnabled(previousMovement);
+                movement.SetMouseLookEnabled(previousMouseLook);
+            }
         }
 
         if (isOpen)
