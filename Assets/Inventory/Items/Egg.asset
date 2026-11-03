@@ -17,7 +17,14 @@ MonoBehaviour:
   description: A filled container of poultry offspring with contents inside known
     to make ingredients bind together to make a solid product when cooked. Contents
     can be cooked to provide a high sustainable nutrient source. Shells are not recommended
-    to ingest.
+    to ingest. (Click on item in inventory while standing infront of shelf to place)
   maxStackSize: 12
+  canDrop: 1
+  canEquip: 0
+  canRead: 0
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 0}
   worldPrefab: {fileID: 3565128889780449494, guid: 1eb6f4021251b564eb25918dd09d837e, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0

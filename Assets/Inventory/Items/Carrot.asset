@@ -15,7 +15,15 @@ MonoBehaviour:
   itemId: carrot
   displayName: Ochre Roots
   description: 'A root based plant used as a cover up to the idea radar techology
-    a war. Excellent ingredient to put in stews. '
+    a war. Excellent ingredient to put in stews. (Click on item in inventory while
+    standing infront of shelf to place) '
   maxStackSize: 4
+  canDrop: 1
+  canEquip: 0
+  canRead: 0
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 0}
   worldPrefab: {fileID: 2234953386648955915, guid: 6dc387baaa58ee449825f1e51db4171c, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0

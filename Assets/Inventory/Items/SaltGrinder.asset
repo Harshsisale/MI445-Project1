@@ -15,7 +15,15 @@ MonoBehaviour:
   itemId: salt_grinder
   displayName: Drying Dust
   description: A small handheld grinder used to grind white crystalline chunks of
-    dust into smaller, more edible pieces.
+    dust into smaller, more edible pieces. (Click on item in inventory while standing
+    infront of shelf to place)
   maxStackSize: 5
+  canDrop: 1
+  canEquip: 0
+  canRead: 0
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 0}
   worldPrefab: {fileID: 3944696517414679776, guid: 0bad2cf2e3990324887e0123dbfe7f17, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0

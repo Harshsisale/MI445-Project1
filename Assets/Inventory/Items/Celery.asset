@@ -15,7 +15,15 @@ MonoBehaviour:
   itemId: celery
   displayName: Stalks Unbroken
   description: Known as a negative calorie food thanks to its difficulty to be broken
-    down in the digestive system.
+    down in the digestive system. (Click on item in inventory while standing infront
+    of shelf to place)
   maxStackSize: 5
+  canDrop: 1
+  canEquip: 0
+  canRead: 0
+  canUse: 0
+  heldPrefab: {fileID: 0}
   icon: {fileID: 0}
   worldPrefab: {fileID: 3638975453124839342, guid: 8c2d9393185fce5439324dd37f382178, type: 3}
+  worldModelScale: {x: 1, y: 1, z: 1}
+  dropHorizontally: 0
