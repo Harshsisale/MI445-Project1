@@ -41708,6 +41708,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c3a8ab7732b47f4799668fddab50db3, type: 3}
+--- !u!1 &243288206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1913832103, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+  m_PrefabInstance: {fileID: 8952107642166905400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &243604519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254032,6 +254037,17 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &1575566435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1841881921, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+  m_PrefabInstance: {fileID: 8952107642166905400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
 --- !u!43 &1576839043
 Mesh:
   m_ObjectHideFlags: 0
@@ -297818,6 +297834,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1913832106, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
   m_PrefabInstance: {fileID: 8952107642166905400}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1838147240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243288206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c5d440c431d1c4ba7a99a825696786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyCamera
+  intensity: 0.4
+  aimMode: 0
+  aimMask:
+    serializedVersion: 2
+    m_Bits: 179
+  maxAimDistance: 100
+  minAimDistance: 0.75
+  aimSmoothing: 18
+  wobbleToPosition: 0.006
+  mountOffset: {x: 0.06, y: 0, z: 0.1}
+  controlFOV: 0
+  baseFOV: 75
+  sprintFOVBoost: 5
+  sprintSpeed: 6.5
+  fovSmoothing: 5
+  useBuiltInMouseLook: 0
+  playerBody: {fileID: 0}
+  mouseSensitivity: 2
+  pitchLimit: 85
+  lockCursor: 1
+  characterController: {fileID: 8952107642166905412}
+  walkSpeed: 4
+  lagAmount: 0.2
+  lagStiffness: 80
+  lagDamping: 10
+  maxLagAngle: 7
+  turnRoll: 0.012
+  maxTurnRoll: 5
+  strafeRoll: 0.6
+  rollSmoothing: 6
+  stepsPerSecond: 1.9
+  bobVertical: 0.03
+  bobSideways: 0.025
+  bobRoll: 1.4
+  bobPitch: 0.7
+  stepKick: 0.9
+  stepDip: 0.012
+  landingMinSpeed: 3
+  landingDip: 0.015
+  landingKick: 0.6
+  landingShake: 0.04
+  impactStiffness: 120
+  impactDamping: 12
+  idleSway: 0.5
+  idleSwaySpeed: 0.3
+  jitter: 0.12
+  jitterSpeed: 8
+  maxShakeAngle: 3.5
+  maxShakeOffset: 0.04
+  shakeFrequency: 20
+  traumaDecay: 1.4
+  leftFoot: {fileID: 0}
+  rightFoot: {fileID: 0}
+  footstepPitchVariation: 0.05
 --- !u!4 &1838226864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6832516733087647827, guid: 7c3a8ab7732b47f4799668fddab50db3, type: 3}
@@ -345184,6 +345266,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1501727725, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1575566435}
     - target: {fileID: 1501727728, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: promptText
       value: 
@@ -345230,7 +345316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1740805037, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1740805038, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_LocalScale.x
@@ -345298,15 +345384,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2080048131, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2080048132, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2080048132, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2080048132, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -345407,7 +345493,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1913832106, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 404006785}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1913832103, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1838147240}
   m_SourcePrefab: {fileID: 100100000, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
 --- !u!114 &8952107642166905402 stripped
 MonoBehaviour:
@@ -345431,6 +345520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+--- !u!143 &8952107642166905412 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 1501727721, guid: 9e26847a64484e2cb26c7f5ac725fab0, type: 3}
+  m_PrefabInstance: {fileID: 8952107642166905400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
