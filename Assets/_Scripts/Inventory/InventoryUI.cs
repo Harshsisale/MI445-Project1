@@ -10,6 +10,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private PlayerInventory inventory;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private PlayerMovement movement;
+    [SerializeField] private JournalInteractionController journalController;
 
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private Transform slotGrid;
@@ -27,6 +28,8 @@ public class InventoryUI : MonoBehaviour
     private InputAction toggleAction;
     private int selectedIndex = -1;
     private bool isOpen;
+
+    public bool IsOpen => isOpen;
 
     private void Awake()
     {
@@ -62,6 +65,9 @@ public class InventoryUI : MonoBehaviour
 
     public void Toggle()
     {
+        if (journalController != null && journalController.IsOpen)
+            return;
+
         isOpen = !isOpen;
         inventoryPanel.SetActive(isOpen);
 

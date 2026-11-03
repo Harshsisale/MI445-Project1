@@ -22,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lookInput;
     private bool sprintHeld;
+    private bool allowMouseLook = true;
+    private bool allowMovement = true;
+
+    public bool MouseLookEnabled => allowMouseLook;
+    public bool MovementEnabled => allowMovement;
 
     private float verticalVelocity;
     private float cameraPitch;
@@ -39,7 +44,27 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        HandleMouseLook();
+        if (allowMouseLook)
+            HandleMouseLook();
+    }
+
+    public void SetMouseLookEnabled(bool enabled)
+    {
+        allowMouseLook = enabled;
+        lookInput = Vector2.zero;
+    }
+
+    public void SetMovementEnabled(bool enabled)
+    {
+        if (allowMovement == enabled)
+            return;
+
+        allowMovement = enabled;
+        if (!enabled)
+        {
+            moveInput = Vector2.zero;
+            sprintHeld = false;
+        }
     }
 
     // Input Events
@@ -51,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        lookInput = context.ReadValue<Vector2>();
+        lookInput = allowMouseLook ? context.ReadValue<Vector2>() : Vector2.zero;
     }
 
     public void OnSprint(InputAction.CallbackContext context)
@@ -63,14 +88,15 @@ public class PlayerMovement : MonoBehaviour
 
 private void HandleMovement()
 {
+    Vector2 effectiveInput = allowMovement ? moveInput : Vector2.zero;
     Vector3 direction =
-        transform.right * moveInput.x +
-        transform.forward * moveInput.y;
+        transform.right * effectiveInput.x +
+        transform.forward * effectiveInput.y;
 
     direction = Vector3.ClampMagnitude(direction, 1f);
 
     bool movingForward =
-        moveInput.y > 0f &&
+        effectiveInput.y > 0f &&
         direction.sqrMagnitude > 0f;
 
     bool canSprint = sprintTimeRemaining > 0f;
@@ -79,7 +105,7 @@ private void HandleMovement()
 
     // Sprint while Shift is held, we're moving forward,
     // and we still have sprint time remaining.
-    if (sprintHeld && movingForward && canSprint)
+    if (allowMovement && sprintHeld && movingForward && canSprint)
     {
         currentSpeed = sprintSpeed;
 
