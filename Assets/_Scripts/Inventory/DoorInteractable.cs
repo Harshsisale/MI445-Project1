@@ -13,11 +13,10 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     [Tooltip("Optional controlling door. Both doors use its open and locked state, and interactions from either side control it.")]
     [SerializeField] private DoorInteractable stateSource;
 
-    [Tooltip("Plays when this door goes from closed to open.")]
+    [Tooltip("Plays when an interaction successfully opens or closes this unlocked door.")]
     public AudioSource doorOpen;
 
     private Quaternion closedRotation;
-    private bool wasOpen;
 
     public bool IsOpen => stateSource != null ? stateSource.IsOpen : isOpen;
     public bool IsLocked => stateSource != null ? stateSource.IsLocked : isLocked;
@@ -39,9 +38,6 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         if (stateSource == null && isOpen)
             hinge.localRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
-
-        // Doors that start open shouldn't play the sound on the first frame.
-        wasOpen = IsOpen;
     }
 
     private void Update()
@@ -59,8 +55,6 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
     private void LateUpdate()
     {
-        UpdateOpenSound();
-
         if (stateSource == null)
             return;
 
@@ -74,39 +68,35 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             (Quaternion.Inverse(source.closedRotation) * source.hinge.localRotation);
     }
 
-    private void UpdateOpenSound()
-    {
-        bool open = IsOpen;
-
-        if (open && !wasOpen && doorOpen != null)
-        {
-            doorOpen.Play();
-            Debug.Log("played");
-        }
-            
-        
-
-        wasOpen = open;
-    }
-
     public void Interact(PlayerItemInteraction player)
     {
-        if (stateSource != null)
+        DoorInteractable controllingDoor = this;
+        AudioSource interactionSound = doorOpen;
+        while (controllingDoor.stateSource != null)
         {
-            stateSource.Interact(player);
-            return;
+            controllingDoor = controllingDoor.stateSource;
+            if (interactionSound == null)
+                interactionSound = controllingDoor.doorOpen;
         }
 
+        // Play once at the interacted doorway, falling back to its controlling door.
+        if (controllingDoor.ToggleDoor(player) && interactionSound != null)
+            interactionSound.Play();
+    }
+
+    private bool ToggleDoor(PlayerItemInteraction player)
+    {
         if (isLocked)
         {
             if (requiredKey == null || player == null || player.Inventory == null ||
                 !player.Inventory.HasItem(requiredKey))
-                return;
+                return false;
 
             SetLocked(false);
         }
 
         SetOpen(!isOpen);
+        return true;
     }
 
     public void SetOpen(bool open)
