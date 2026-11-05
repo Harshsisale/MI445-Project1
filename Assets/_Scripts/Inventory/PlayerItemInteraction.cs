@@ -51,7 +51,8 @@ public class PlayerItemInteraction : MonoBehaviour
 
     private void HandleInteractionInput()
     {
-        InputAction action = CurrentInteractable is WorldItemPickup ? pickupAction : interactAction;
+        InputAction action = CurrentInteractable is WorldItemPickup || CurrentInteractable is WorldRecipeInteractable
+            ? pickupAction : interactAction;
         if (action.WasPressedThisFrame())
             CurrentInteractable?.Interact(this);
     }
@@ -71,6 +72,9 @@ public class PlayerItemInteraction : MonoBehaviour
 
     private string GetInteractionPrompt()
     {
+        if (CurrentInteractable is WorldRecipeInteractable)
+            return "Press E to read recipe";
+
         if (CurrentInteractable is SwitchInteractable switchInteractable)
             return switchInteractable.GetInteractionPrompt(this);
 

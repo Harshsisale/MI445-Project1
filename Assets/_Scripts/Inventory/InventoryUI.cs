@@ -73,6 +73,9 @@ public class InventoryUI : MonoBehaviour
         if (journalController != null && journalController.IsOpen)
             return;
 
+        if (movement != null && movement.TryGetComponent(out RecipeViewer recipeViewer) && recipeViewer.IsOpen)
+            return;
+
         isOpen = !isOpen;
         inventoryPanel.SetActive(isOpen);
 
